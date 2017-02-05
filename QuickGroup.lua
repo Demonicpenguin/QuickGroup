@@ -130,31 +130,3 @@ SlashCmdList["QUICKGROUP"] = function(msg)
 		end
 end
 end
-
---		if ach == true then
---		local result = GetMouseFocus().resultID
---		a, b, c, d, e, f, g, h, i, j, k, l, w = C_LFGList.GetSearchResultInfo(result);
---		C_LFGList.ApplyToGroup(result, "", ta, he, dp);
---		SendChatMessage(GetAchievementLink(achid), "WHISPER", nil, w); 
---		return;
---		end
---		local result = GetMouseFocus().resultID
---		a, b, c, d, e, f, g, h, i, j, k, l, w = C_LFGList.GetSearchResultInfo(result);
---		if w ~= nil and result ~= nil  and link ~= nil then
---			if ta or he or dp == true then
---				C_LFGList.ApplyToGroup(result, "", ta, he, dp);
---				SendChatMessage(link, "WHISPER", nil, w); 
---			else
---				print("No roles configured");
---			end
---		else
---			if w == nil then
---				print("Error trying to find leader");
---			end
---			if result == nil then
---				print("No result found, were you moused over the LFG window?");
---			end
---			if link == nil then
---				print("No key setup!");
---			end
---		end
