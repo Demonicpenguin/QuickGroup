@@ -1,0 +1,6 @@
+## Title: QuickGroup
+## Version: 1.0
+## Author: Demonicpenguin
+## Interface: 70100
+
+QuickGroup.lua
