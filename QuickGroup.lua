@@ -2,7 +2,7 @@
 -- Create Date : 5/29/2014 4:32:02 PM
 
 print("QuickGroup Loaded!");
-SLASH_QUICKGROUP1 = "/qg";
+SLASH_QUICKGROUP1, SLASH_QUICKGROUP2 = "/qg", "/QG";
 local link;
 local ta = false;
 local he = false;
@@ -110,6 +110,7 @@ SlashCmdList["QUICKGROUP"] = function(msg)
 		elseif sMode == "raid" then
 		  SendChatMessage(GetAchievementLink(achid), "WHISPER", nil, w);
 		elseif sMode == "none" then
+		
 		end
 	 else
       if w == nil then
@@ -121,10 +122,14 @@ SlashCmdList["QUICKGROUP"] = function(msg)
     end
 	
 	elseif command == 'id' then
-		achid = GetMouseFocus().id;
-		achid = achid + 0;
-		if achid > 0 then
-			print("Achievement set to: "..GetAchievementLink(achid));
+		if GetMouseFocus().id ~= nil then
+			achid = GetMouseFocus().id;
+			achid = achid + 0;
+			if achid > 0 then
+				print("Achievement set to: "..GetAchievementLink(achid));
+			else
+				print("No Achievement found, please mouse over an achievement and run the command again");
+			end
 		else
 			print("No Achievement found, please mouse over an achievement and run the command again");
 		end
