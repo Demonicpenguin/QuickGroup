@@ -1,6 +1,5 @@
 -- Author      : Demonicpenguin
--- Create Date : 5/29/2014 4:32:02 PM
--- :)
+
 
 print("QuickGroup Loaded!");
 SLASH_QUICKGROUP1, SLASH_QUICKGROUP2 = "/qg", "/QG";
