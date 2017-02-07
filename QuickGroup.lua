@@ -7,8 +7,9 @@ local link;
 local ta = false;
 local he = false;
 local dp = false;
-local ach = false;
-local sMode = "";
+local sAd = "Joined using QuickGroup"
+local bAd = false;
+local sMode = "none";
 local achid = 11194;
 local queue = "You will be queued as ";
 
@@ -71,34 +72,32 @@ SlashCmdList["QUICKGROUP"] = function(msg)
 			end
 		elseif mode == 'raid' then
 			sMode = "raid";
-			-- if achieve ~= nil then
-				-- achieve = achieve + 0;
-				-- if achieve > 0 then
-					-- achid = achieve;
-				-- end
-			-- end
-			print("Raid mode enabled, Achievement: "..GetAchievementLink(achid));
-					
+			print("Raid mode enabled, Achievement: "..GetAchievementLink(achid));					
 		elseif mode == 'none' then
-		  ach = false;
+		  sMode = "none";
 		else
 			print("No mode selected!");
 		end
-		
 		
 		print(queue);
 		
 	elseif command == 'join' then
 		local result = GetMouseFocus().resultID
+		if result ~= nil then
 		a, b, c, d, e, f, g, h, i, j, k, l, w = C_LFGList.GetSearchResultInfo(result);
+		end
 		
-		if w ~= nil and result ~= nil then		
+		if w ~= nil and result ~= nil then
 		
 		if ta == false and he == false and dp == false then
 			print("No roles configured");
 			return;
 		else
-			C_LFGList.ApplyToGroup(result, "", ta, he, dp);
+			if bAd == true then
+				C_LFGList.ApplyToGroup(result, sAd, ta, he, dp);
+			else
+				C_LFGList.ApplyToGroup(result, "", ta, he, dp);
+			end			
 		end		 
 		
 		if sMode == "key" then
@@ -108,10 +107,11 @@ SlashCmdList["QUICKGROUP"] = function(msg)
 				SendChatMessage(link, "WHISPER", nil, w); 
 			end		  
 		elseif sMode == "raid" then
-		  SendChatMessage(GetAchievementLink(achid), "WHISPER", nil, w);
+			SendChatMessage(GetAchievementLink(achid), "WHISPER", nil, w);
 		elseif sMode == "none" then
 		
 		end
+		
 	 else
       if w == nil then
         print("Error trying to find leader");
@@ -133,5 +133,17 @@ SlashCmdList["QUICKGROUP"] = function(msg)
 		else
 			print("No Achievement found, please mouse over an achievement and run the command again");
 		end
-end
+		
+	elseif command == 'ad' then
+		if bAd == true then
+			bAd = false;
+			print("Ad has been turned: off");
+		else
+			bAd = true;
+			print("Ad has been turned: on");
+		end
+	elseif command == 'mode' then
+		sMode = tank;
+		print("Mode set to: "..sMode);
+	end
 end
