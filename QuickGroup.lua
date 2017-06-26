@@ -1,6 +1,5 @@
 -- Author      : Demonicpenguin
 
-
 print("QuickGroup Loaded!");
 SLASH_QUICKGROUP1, SLASH_QUICKGROUP2 = "/qg", "/QG";
 local link;
@@ -10,7 +9,7 @@ local dp = false;
 local sAd = "Joined using QuickGroup"
 local bAd = false;
 local sMode = "none";
-local achid = 11194;
+local achid = 11790;
 local queue = "You will be queued as ";
 
 SlashCmdList["QUICKGROUP"] = function(msg)
