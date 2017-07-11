@@ -1,19 +1,34 @@
 -- Author      : Demonicpenguin
 
-print("QuickGroup Loaded!");
+
 SLASH_QUICKGROUP1, SLASH_QUICKGROUP2 = "/qg", "/QG";
+
 local link;
-local ta = false;
-local he = false;
-local dp = false;
-local sAd = "Joined using QuickGroup"
-local bAd = false;
-local sMode = "none";
-local achid = 11790;
-local queue = "You will be queued as ";
+ta = false;
+he = false;
+dp = false;
+sAd = "Joined using QuickGroup"
+bAd = false;
+sMode = "none";
+achid = 11790;
+queue = "You will be queued as ";
+
+local frame = CreateFrame("FRAME");
+frame:RegisterEvent("ADDON_LOADED");
+frame:RegisterEvent("PLAYER_LOGOUT");
+
+function frame:OnEvent(event, arg1)
+ if event == "ADDON_LOADED" and arg1 == "QuickGroup" then
+    print("QuickGroup Loaded!");
+ elseif event == "PLAYER_LOGOUT" then
+   
+ end
+end
+frame:SetScript("OnEvent", frame.OnEvent);
 
 SlashCmdList["QUICKGROUP"] = function(msg)
 	local command, tank, heals, dps, mode = strsplit(" ",msg)
+	
 	if command == 'set' then
 		queue = "You will be queued as ";
 		

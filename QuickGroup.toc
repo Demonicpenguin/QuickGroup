@@ -2,5 +2,7 @@
 ## Version: 1.0
 ## Author: Demonicpenguin
 ## Interface: 70200
+## SavedVariables: bAd
+## SavedVariablesPerCharacter: link, ta, he, dp, sMode, achid, queue
 
 QuickGroup.lua
