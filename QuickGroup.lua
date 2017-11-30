@@ -10,7 +10,7 @@ dp = false;
 sAd = "Joined using QuickGroup"
 bAd = false;
 sMode = "none";
-achid = 11790;
+achid = 12110;
 queue = "You will be queued as ";
 
 local frame = CreateFrame("FRAME");
