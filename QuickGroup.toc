@@ -1,8 +1,7 @@
 ## Title: QuickGroup
-## Version: 1.0
+## Version: 2.0
 ## Author: Demonicpenguin
 ## Interface: 70300
-## SavedVariables: bAd
-## SavedVariablesPerCharacter: link, ta, he, dp, sMode, achid, queue
+## SavedVariablesPerCharacter: lKeystone, bTank, bHeal, bDPS, iMode, achid
 
-QuickGroup.lua
+QuickGroup.xml

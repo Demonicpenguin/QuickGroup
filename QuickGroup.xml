@@ -1,8 +1,175 @@
 <Ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file="QuickGroup.lua" />
-	<Frame name="QuickGroup">
+	<Frame name="QuickGroupFrame" parent="UIParent" toplevel="true" enableMouse="true">
+		<Size x="461" y="250" />
+		<Anchors>
+			<Anchor point="CENTER" x="-167" y="74" />
+		</Anchors>
+		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+			<BackgroundInsets>
+				<AbsInset left="11" right="12" top="12" bottom="11" />
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="32" />
+			</TileSize>
+			<EdgeSize>
+				<AbsValue val="32" />
+			</EdgeSize>
+		</Backdrop>
+		<Layers>
+			<Layer>
+				<Texture name="HealsTexture" file="Interface\LFGFRAME\UI-LFG-ICON-ROLES">
+					<Size x="64" y="64" />
+					<Anchors>
+						<Anchor point="TOPLEFT" x="139" y="-49" />
+					</Anchors>
+				</Texture>
+				<Texture name="DPSTexture" file="Interface\LFGFRAME\UI-LFG-ICON-ROLES">
+					<Size x="64" y="64" />
+					<Anchors>
+						<Anchor point="TOPLEFT" x="253" y="-49" />
+					</Anchors>
+				</Texture>
+				<Texture name="TankTexture" file="Interface\LFGFRAME\UI-LFG-ICON-ROLES">
+					<Size x="64" y="64" />
+					<Anchors>
+						<Anchor point="TOPLEFT" x="25" y="-49" />
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="OVERLAY">
+				<FontString name="strQuickGroup" inherits="GameFontNormal" text="Quick Group Role Selector">
+					<Size x="187" y="20" />
+					<Anchors>
+						<Anchor point="TOPLEFT" x="77" y="-15" />
+					</Anchors>
+				</FontString>
+				<FontString name="strMKeystone" inherits="GameFontNormal" text="Mode: Keystone / Mythic+" justifyH="LEFT">
+					<Size x="178" y="20" />
+					<Anchors>
+						<Anchor point="TOPLEFT" x="47" y="-151" />
+					</Anchors>
+				</FontString>
+				<FontString name="strMRaid" inherits="GameFontNormal" text="Mode: Raid / Achievement" justifyH="LEFT">
+					<Size x="178" y="20" />
+					<Anchors>
+						<Anchor point="TOPLEFT" x="47" y="-179" />
+					</Anchors>
+				</FontString>
+				<FontString name="strMNone" inherits="GameFontNormal" text="Mode: No Whisper" justifyH="LEFT">
+					<Size x="127" y="20" />
+					<Anchors>
+						<Anchor point="TOPLEFT" x="47" y="-205" />
+					</Anchors>
+				</FontString>
+				<FontString name="strAchievements" inherits="GameFontNormal" text="Achievements:" justifyH="RIGHT">
+					<Size x="94" y="20" />
+					<Anchors>
+						<Anchor point="TOPLEFT" x="345" y="-15" />
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<CheckButton name="TankCheckBox" inherits="UICheckButtonTemplate" text="CheckButton1">
+				<Size x="32" y="32" />
+				<Anchors>
+					<Anchor point="TOPLEFT" x="41" y="-110" />
+				</Anchors>
+			</CheckButton>
+			<CheckButton name="HealsCheckBox" inherits="UICheckButtonTemplate" text="CheckButton1">
+				<Size x="32" y="32" />
+				<Anchors>
+					<Anchor point="TOPLEFT" x="155" y="-110" />
+				</Anchors>
+			</CheckButton>
+			<CheckButton name="DPSCheckBox" inherits="UICheckButtonTemplate" text="CheckButton1">
+				<Size x="32" y="32" />
+				<Anchors>
+					<Anchor point="TOPLEFT" x="269" y="-110" />
+				</Anchors>
+			</CheckButton>
+			<Button name="btnOk" inherits="UIPanelButtonTemplate" text="Ok">
+				<Size x="75" y="23" />
+				<Anchors>
+					<Anchor point="TOPLEFT" x="360" y="-202" />
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						btnOk_OnClick()
+					</OnClick>
+				</Scripts>
+			</Button>
+			<CheckButton name="chkKeystone" inherits="UICheckButtonTemplate" text="CheckButton1">
+				<Size x="16" y="16" />
+				<Anchors>
+					<Anchor point="TOPLEFT" x="25" y="-155" />
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						chkKeystone_OnClick()
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="chkRaid" inherits="UICheckButtonTemplate" text="CheckButton1">
+				<Size x="16" y="16" />
+				<Anchors>
+					<Anchor point="TOPLEFT" x="25" y="-183" />
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						chkRaid_OnClick()
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="chkNone" inherits="UICheckButtonTemplate" text="CheckButton1">
+				<Size x="16" y="16" />
+				<Anchors>
+					<Anchor point="TOPLEFT" x="25" y="-211" />
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						chkNone_OnClick()
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<Button name="btnAoTC" inherits="UIPanelButtonTemplate" text="AoTC">
+				<Size x="85" y="23" />
+				<Anchors>
+					<Anchor point="TOPLEFT" x="350" y="-41" />
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						btnAoTC_OnClick()
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="btnKeystone" inherits="UIPanelButtonTemplate" text="Key Master">
+				<Size x="85" y="23" />
+				<Anchors>
+					<Anchor point="TOPLEFT" x="350" y="-70" />
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						btnKeystone_OnClick()
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="btnOther" inherits="UIPanelButtonTemplate" text="Other">
+				<Size x="85" y="23" />
+				<Anchors>
+					<Anchor point="TOPLEFT" x="350" y="-99" />
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						btnOther_OnClick()
+					</OnClick>
+				</Scripts>
+			</Button>
+		</Frames>
 		<Scripts>
 			<OnLoad>
+				QuickGroupFrame_OnLoad()
 			</OnLoad>
 		</Scripts>
 	</Frame>

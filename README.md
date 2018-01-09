@@ -1,56 +1,18 @@
 # QuickGroup
-This addon was designed to help you join carry groups for Mythic+ Keystones or raid groups quickly using the premade group finder. It is currently command based and is very simple to use.
+This addon was designed to help you join carry groups for Mythic+ Keystones or raid groups quickly using the premade group finder. This latest version has a UI!!!
 
- 
+ /qg or /QG will now open the main window of the addon.
 
-The following commands are available:
+A window will be shown to select a role that you will queue as and a mode the addon should be set to.
 
-(/qg or /QG) 
+Keystone / Mythic+ will send the current key in your bag to the leader of the group.
 
- 
+Raid / Achievement will send an achievement to the leader of the group. This can be customized using the buttons on the right.
+	If you don't see the achievement that you want to send to the leader, open your achievement window, mouse over the achievement and type /qg id
+	This will set the achievement you link to the one currently under your mouse.
 
-/qg set TANK HEALER DPS MODE
+No Whisper will not send a whisper to the group leader and can be used for quickly joining groups without having to click too much.
 
- 
+Once you have your role and mode setup, (I suggest making a macro) type ' /qg join ' (without the '' of course) while moused over the group that you wish to join. It will handle the rest. Apply to the group for the roles you requested and send the leader a whisper depending on the mode you selected.
 
- 
-
-Tank, Healer and DPS are a y or n (yes or no respectively)
-
-Mode, can be set to key, for Mythic+, raid for raid groups, or none, to apply to the group without whispering the leader.
-
- 
-
-If you are using Mythic+ mode (key), the addon will automatically find the Keystone in your bag.
-
- 
-
-Typing /qg id will set the achievement that is whispered to the group leader when using raid mode.
-
- 
-
-Finally, /qg join will apply to the group you are moused over in the Premade Groups window and whisper the leader your, key, achievement or not at all depending on your previous settings.
-
- 
-
-Examples:
-
- 
-
-/qg set y n y key
-
- 
-
-Will set the addon to whisper the leader of the group with the keystone in your bag and queue you as a Tank or DPS.
-
- 
-
-/qg set n y n raid
-
- 
-
-Will set the addon to whisper the leader of the group with an achievement you have picked out from the achievement menu, using /qg id or Xavius AoTC by default without setting and achievement up.
-
- 
-
-For questions, comments or concerns, please comment and I will attempt to reply ASAP.
+That's all there is to it now, simple, quick and effective. If you have any questions, compliments, concerns, please leave a note below and I will work to fix it for you or respond!
