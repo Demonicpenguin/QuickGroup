@@ -9,119 +9,6 @@
 	iMode = 0;
 	achid = 12110;
 
-
-
-function QuickGroupFrame_OnLoad()
-	QuickGroupFrame:Hide()
-	print("QuickGroup: Loaded, use /qg or /QG to open the main window!")
-	TankTexture:SetTexCoord(GetTexCoordsForRole("TANK"));
-	HealsTexture:SetTexCoord(GetTexCoordsForRole("HEALER"));
-	DPSTexture:SetTexCoord(GetTexCoordsForRole("DAMAGER"));
-
---	if bTank == true then
---		t1 = "True";
---	else
---		t1 = "False";
---	end
-
---	if bHeal == true then
---		t2 = "True";
---	else
---		t2 = "False";
---	end
-
---	if bDPS == true then
---		t3 = "True";
---	else
---		t3 = "False";
---	end
---	print("Tank: "..t1.." Heals: "..t2.." DPS: "..t3);
---	print("Mode: "..iMode);
-
-	if bTank == true then
-		TankCheckBox:SetChecked(true)
-	else
-		TankCheckBox:SetChecked(false)
-	end
-
-	if bHeal == true then
-		HealsCheckBox:SetChecked(true)
-	else
-		HealsCheckBox:SetChecked(false)
-	end
-
-	if bTank == true then
-		DPSCheckBox:SetChecked(true)
-	else
-		DPSCheckBox:SetChecked(false)
-	end
-
-	if iMode == 0 then
-		chkKeystone:SetChecked(true)
-	elseif iMode == 1 then
-		chkRaid:SetChecked(true)
-	elseif iMode == 2 then
-		chkNone:SetChecked(true)
-	end
-
-	AchieveCheck();
-end
-
---function QuickGroupFrame_OnEvent(event, arg1)
---	if event == "ADDON_LOADED" and arg1 == "QuickGroupUI" then
---		print("QuickGroup Loaded! NOW WITH UI!!");
---	if bTank == true then
---		t1 = "True";
---	else
---		t1 = "False";
---	end
-
---	if bHeal == true then
---		t2 = "True";
---	else
---		t2 = "False";
---	end
-
---	if bDPS == true then
---		t3 = "True";
---	else
---		t3 = "False";
---	end
---	print("Tank: "..t1.." Heals: "..t2.." DPS: "..t3);
---	print("Mode: "..iMode);
-
---	if bTank == true then
---		TankCheckBox:SetChecked(true)
---	else
---		TankCheckBox:SetChecked(false)
---	end
-
---	if bHeal == true then
---		HealsCheckBox:SetChecked(true)
---	else
---		HealsCheckBox:SetChecked(false)
---	end
-
---	if bTank == true then
---		DPSCheckBox:SetChecked(true)
---	else
---		DPSCheckBox:SetChecked(false)
---	end
-
---	if iMode == 0 then
---		chkKeystone:SetChecked(true)
---	elseif iMode == 1 then
---		chkRaid:SetChecked(true)
---	elseif iMode == 2 then
---		chkNone:SetChecked(true)
---	end
-
---	AchieveCheck();
---	elseif event == "PLAYER_LOGOUT" then
-   
---	end
---end
-
 SlashCmdList["QUICKGROUP"] = function(msg)
 	local command = strsplit(" ",msg)
 	if command == nil or command == "" then
@@ -183,7 +70,69 @@ SlashCmdList["QUICKGROUP"] = function(msg)
 		end
 	end
 
+end	
+
+function QuickGroupFrame_OnLoad()
+
+	QuickGroupFrame:Hide()
+	print("QuickGroup: Loaded, use /qg to open the main window!")
+	TankTexture:SetTexCoord(GetTexCoordsForRole("TANK"));
+	HealsTexture:SetTexCoord(GetTexCoordsForRole("HEALER"));
+	DPSTexture:SetTexCoord(GetTexCoordsForRole("DAMAGER"));
+	
+	local joinFrame = CreateFrame("Button", "joinFrame", LFGListFrame.SearchPanel, 'UIPanelButtonTemplate')
+	joinFrame:SetScript("OnMouseDown", JoinGroup)
+	joinFrame:SetSize(96,26)
+	joinFrame:SetText("Quick Join")
+	joinFrame:SetPoint("RIGHT", LFGListFrame.SearchPanel.RefreshButton, "LEFT", -5, 0)
+
 end
+
+function QuickGroupFrame_OnShow()
+	if bTank == true then
+		TankCheckBox:SetChecked(true)
+	else
+		TankCheckBox:SetChecked(false)
+	end
+
+	if bHeal == true then
+		HealsCheckBox:SetChecked(true)
+	else
+		HealsCheckBox:SetChecked(false)
+	end
+
+	if bDPS == true then
+		DPSCheckBox:SetChecked(true)
+	else
+		DPSCheckBox:SetChecked(false)
+	end
+
+	if iMode == 0 then
+		chkKeystone:SetChecked(true)
+	elseif iMode == 1 then
+		chkRaid:SetChecked(true)
+	elseif iMode == 2 then
+		chkNone:SetChecked(true)
+	end
+
+	AchieveCheck();
+end
+
+local function onEvent(regFrame)
+    if AchievementFrame then
+        local idFrame = CreateFrame("Button", "idFrame", AchievementFrameCloseButton, 'UIPanelButtonTemplate')
+		idFrame:SetScript("OnClick", GetID)
+		idFrame:SetSize(63,26)
+		idFrame:SetText("Get ID")
+		idFrame:SetPoint("RIGHT", AchievementFrameCloseButton, "LEFT", -5, 0)
+        regFrame:UnregisterAllEvents()
+    end
+end
+
+local regFrame = CreateFrame("Frame")
+regFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+regFrame:RegisterEvent("ADDON_LOADED")
+regFrame:SetScript("OnEvent", onEvent)
 
 function btnOk_OnClick()
 	if TankCheckBox:GetChecked() == true then
@@ -227,25 +176,6 @@ function btnOk_OnClick()
 		print("No whisper will be sent to the leader")
 	end
 
---	if bTank == true then
---		t1 = "True";
---	else
---		t1 = "False";
---	end
-
---	if bHeal == true then
---		t2 = "True";
---	else
---		t2 = "False";
---	end
-
---	if bDPS == true then
---		t3 = "True";
---	else
---		t3 = "False";
---	end
---	print("Tank: "..t1.." Heals: "..t2.." DPS: "..t3);
---	print("Mode: "..iMode);
 	QuickGroupFrame:Hide();
 end
 
@@ -265,6 +195,22 @@ function chkNone_OnClick()
 	chkRaid:SetChecked(false);
 	chkKeystone:SetChecked(false);
 	AchieveCheck()
+end
+
+function btnAoTC_OnClick()
+	achid = 12110
+	print("Achievement set to: "..GetAchievementLink(achid));
+end
+
+function btnKeystone_OnClick()
+	achid = 11162
+	print("Achievement set to: "..GetAchievementLink(achid));
+end
+
+function btnOther_OnClick()
+	if AchievementFrameAchievements ~= nil then
+		GetID()
+	end
 end
 
 function GetKeystone()
@@ -304,16 +250,60 @@ function AchieveCheck()
 	end
 end
 
-function btnAoTC_OnClick()
-	achid = 12110
-	print("Achievement set to: "..GetAchievementLink(achid));
+function JoinGroup(joinFrame, button)
+	if button == 'LeftButton' then
+		local dialog = joinFrame:GetParent().selectedResult
+		if dialog ~= nil then
+			a, b, c, d, e, f, g, h, i, j, k, l, w = C_LFGList.GetSearchResultInfo(dialog);
+		end
+		if w ~= nil and dialog ~= nil then
+			if bTank == false and bHeal == false and bDPS == false then
+				print("No roles configured");
+				QuickGroupFrame:Show()
+				return;
+			else
+				C_LFGList.ApplyToGroup(dialog, "", bTank, bHeal, bDPS);		
+			end
+		
+			if iMode == 0 then
+				local keystones = GetKeystone()
+				for i = 1, #keystones do
+					lKeystone = keystones[i]
+				end
+	
+				if lKeystone == nil then
+					print("No key setup!");
+				else
+					SendChatMessage(lKeystone, "WHISPER", nil, w); 
+				end
+			elseif iMode == 1 then
+				SendChatMessage(GetAchievementLink(achid), "WHISPER", nil, w);
+			elseif iMode == nil then
+				print("You broke the addon")
+			end
+		
+		else
+			if w == nil then
+			print("Error trying to find leader");
+			end
+
+			if dialog == nil then
+			print("No result found, did you click on a group?");
+			end
+		end
+	end
+
+	if button == 'RightButton' then
+		QuickGroupFrame:Show()
+	end
+
 end
 
-function btnKeystone_OnClick()
-	achid = 11162
-	print("Achievement set to: "..GetAchievementLink(achid));
-end
-
-function btnOther_OnClick()
-	print("To set a different achievement, please use ' /qg id ' while you are moused over the achievement in the Achievement window.")
+function GetID()
+	achid = AchievementFrameAchievements.selection
+	if achid ~= nil then
+		print("Achievement set to: "..GetAchievementLink(achid));
+	else
+		print("Please select an achievement in the achievement window.")
+	end
 end

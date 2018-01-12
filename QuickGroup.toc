@@ -3,5 +3,8 @@
 ## Author: Demonicpenguin
 ## Interface: 70300
 ## SavedVariablesPerCharacter: lKeystone, bTank, bHeal, bDPS, iMode, achid
+## OptionalDeps: LibStub, LibUIDropDownMenu
 
 QuickGroup.xml
+LibStub\LibStub.lua
+LibUIDropDownMenu\LibUIDropDownMenu.xml
