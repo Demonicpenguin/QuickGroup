@@ -75,7 +75,7 @@
 					</Anchors>
 				</FontString>
 				<FontString name="strAutoConfirm" inherits="GameFontNormal" text="Auto Confirm Roles" justifyH="LEFT">
-					<Size x="121" y="20" />
+					<Size x="148" y="20" />
 					<Anchors>
 						<Anchor point="TOPLEFT" x="291" y="-173" />
 					</Anchors>
