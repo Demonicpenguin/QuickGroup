@@ -1,9 +1,9 @@
 <Ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file="QuickGroup.lua" />
 	<Frame name="QuickGroupFrame" parent="UIParent" toplevel="true" enableMouse="true">
-		<Size x="461" y="250" />
+		<Size x="461" y="258" />
 		<Anchors>
-			<Anchor point="CENTER" />
+			<Anchor point="CENTER" x="0" y="-4" />
 		</Anchors>
 		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
 			<BackgroundInsets>
@@ -68,6 +68,18 @@
 						<Anchor point="TOPLEFT" x="345" y="-15" />
 					</Anchors>
 				</FontString>
+				<FontString name="strNote" inherits="GameFontNormal" text="Note:" justifyH="RIGHT">
+					<Size x="80" y="20" />
+					<Anchors>
+						<Anchor point="TOPLEFT" x="221" y="-151" />
+					</Anchors>
+				</FontString>
+				<FontString name="strAutoConfirm" inherits="GameFontNormal" text="Auto Confirm Roles" justifyH="LEFT">
+					<Size x="121" y="20" />
+					<Anchors>
+						<Anchor point="TOPLEFT" x="291" y="-173" />
+					</Anchors>
+				</FontString>
 			</Layer>
 		</Layers>
 		<Frames>
@@ -92,7 +104,7 @@
 			<Button name="btnOk" inherits="UIPanelButtonTemplate" text="Ok">
 				<Size x="75" y="23" />
 				<Anchors>
-					<Anchor point="TOPLEFT" x="360" y="-202" />
+					<Anchor point="TOPLEFT" x="364" y="-211" />
 				</Anchors>
 				<Scripts>
 					<OnClick>
@@ -166,6 +178,23 @@
 					</OnClick>
 				</Scripts>
 			</Button>
+			<EditBox name="boxNote" inherits="InputBoxTemplate" autoFocus="false">
+				<Size x="128" y="32" />
+				<Anchors>
+					<Anchor point="TOPLEFT" x="307" y="-145" />
+				</Anchors>
+			</EditBox>
+			<CheckButton name="chkAutoConfirm" inherits="UICheckButtonTemplate" text="CheckButton1">
+				<Size x="16" y="16" />
+				<Anchors>
+					<Anchor point="TOPLEFT" x="269" y="-177" />
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						chkAutoConfirm_OnClick()
+					</OnClick>
+				</Scripts>
+			</CheckButton>
 		</Frames>
 		<Scripts>
 			<OnLoad>

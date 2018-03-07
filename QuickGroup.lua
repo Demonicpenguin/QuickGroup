@@ -3,9 +3,14 @@
 	SLASH_QUICKGROUP1, SLASH_QUICKGROUP2 = "/qg", "/QG";
 	lKeystone = nil;
 	local KeystoneId = 138019
+	dialog = nil;
 	bTank = false;
 	bHeal = false;
 	bDPS = false;
+	bAutoConfirm = false;
+	sNote = "";
+	local appliedgroups = {}
+	wtarget = "";
 	iMode = 0;
 	achid = 12110;
 
@@ -28,7 +33,7 @@ SlashCmdList["QUICKGROUP"] = function(msg)
 			QuickGroupFrame:Show()
 			return;
 		else
-			C_LFGList.ApplyToGroup(result, "", bTank, bHeal, bDPS);		
+			C_LFGList.ApplyToGroup(result, sNote, bTank, bHeal, bDPS);		
 		end
 		
 		if iMode == 0 then
@@ -86,6 +91,20 @@ function QuickGroupFrame_OnLoad()
 	joinFrame:SetText("Quick Join")
 	joinFrame:SetPoint("RIGHT", LFGListFrame.SearchPanel.RefreshButton, "LEFT", -5, 0)
 
+	StaticPopupDialogs["AppliedGroupFrame"] = {
+					text = "You have recently applied to this group, do you want to continue?",
+					button1 = "Yes",
+					button2 = "No",
+					OnAccept = function()
+						C_LFGList.ApplyToGroup(dialog, sNote, bTank, bHeal, bDPS);
+						SendWhisper(wtarget)
+					end,
+					timeout = 0,
+					whileDead = true,
+					hideOnEscape = false,
+					preferredIndex = 3,  -- avoid some UI taint, see http://www.wowace.com/announcements/how-to-avoid-some-ui-taint/
+	}
+
 end
 
 function QuickGroupFrame_OnShow()
@@ -107,6 +126,12 @@ function QuickGroupFrame_OnShow()
 		DPSCheckBox:SetChecked(false)
 	end
 
+	if bAutoConfirm == true then
+		chkAutoConfirm:SetChecked(true)		
+	else
+		chkAutoConfirm:SetChecked(false)
+	end
+
 	if iMode == 0 then
 		chkKeystone:SetChecked(true)
 	elseif iMode == 1 then
@@ -114,6 +139,8 @@ function QuickGroupFrame_OnShow()
 	elseif iMode == 2 then
 		chkNone:SetChecked(true)
 	end
+
+	boxNote:SetText(sNote)
 
 	AchieveCheck();
 end
@@ -129,10 +156,29 @@ local function onEvent(regFrame)
     end
 end
 
+local function SendRoles()
+	if bAutoConfirm == true then
+		local _, _, _, _, _, isBGRoleCheck = GetLFGRoleUpdate();
+	
+		if ( isBGRoleCheck ) then
+			SetPVPRoles(bTank, bHeal, bDPS);
+		else
+			local oldLeader = GetLFGRoles();
+			SetLFGRoles(oldLeader, bTank, bHeal, bDPS);
+		end
+	
+		CompleteLFGRoleCheck(true);
+	end
+end
+
 local regFrame = CreateFrame("Frame")
 regFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 regFrame:RegisterEvent("ADDON_LOADED")
 regFrame:SetScript("OnEvent", onEvent)
+
+local lfrrFrame = CreateFrame("Frame")
+lfrrFrame:RegisterEvent("LFG_ROLE_CHECK_SHOW")
+lfrrFrame:SetScript("OnEvent", SendRoles)
 
 function btnOk_OnClick()
 	if TankCheckBox:GetChecked() == true then
@@ -176,6 +222,8 @@ function btnOk_OnClick()
 		print("No whisper will be sent to the leader")
 	end
 
+	sNote = boxNote:GetText()
+
 	QuickGroupFrame:Hide();
 end
 
@@ -195,6 +243,14 @@ function chkNone_OnClick()
 	chkRaid:SetChecked(false);
 	chkKeystone:SetChecked(false);
 	AchieveCheck()
+end
+
+function chkAutoConfirm_OnClick()
+	if chkAutoConfirm:GetChecked() == true then
+		bAutoConfirm = true;
+	else
+		bAutoConfirm = false;
+	end
 end
 
 function btnAoTC_OnClick()
@@ -250,36 +306,48 @@ function AchieveCheck()
 	end
 end
 
+function SendWhisper(w)
+	if iMode == 0 then
+		local keystones = GetKeystone()
+		for i = 1, #keystones do
+			lKeystone = keystones[i]
+		end
+
+		if lKeystone == nil then
+			print("No key setup!");
+		else
+			SendChatMessage(lKeystone, "WHISPER", nil, w);
+		end
+	elseif iMode == 1 then
+		SendChatMessage(GetAchievementLink(achid), "WHISPER", nil, w);
+	elseif iMode == nil then
+		print("You broke the addon")
+	end
+end
+
 function JoinGroup(joinFrame, button)
 	if button == 'LeftButton' then
-		local dialog = joinFrame:GetParent().selectedResult
+
+		dialog = joinFrame:GetParent().selectedResult
 		if dialog ~= nil then
-			a, b, c, d, e, f, g, h, i, j, k, l, w = C_LFGList.GetSearchResultInfo(dialog);
+			a, b, groupname, d, e, f, g, h, i, j, k, l, w = C_LFGList.GetSearchResultInfo(dialog);
 		end
+
+		wtarget = w
+
 		if w ~= nil and dialog ~= nil then
 			if bTank == false and bHeal == false and bDPS == false then
 				print("No roles configured");
 				QuickGroupFrame:Show()
 				return;
 			else
-				C_LFGList.ApplyToGroup(dialog, "", bTank, bHeal, bDPS);		
-			end
-		
-			if iMode == 0 then
-				local keystones = GetKeystone()
-				for i = 1, #keystones do
-					lKeystone = keystones[i]
-				end
-	
-				if lKeystone == nil then
-					print("No key setup!");
+				if has_applied(groupname) == true then					
+					StaticPopup_Show ("AppliedGroupFrame")
 				else
-					SendChatMessage(lKeystone, "WHISPER", nil, w); 
-				end
-			elseif iMode == 1 then
-				SendChatMessage(GetAchievementLink(achid), "WHISPER", nil, w);
-			elseif iMode == nil then
-				print("You broke the addon")
+					C_LFGList.ApplyToGroup(dialog, sNote, bTank, bHeal, bDPS);
+					table.insert(appliedgroups, groupname)
+					SendWhisper(w)
+				end				
 			end
 		
 		else
@@ -306,4 +374,14 @@ function GetID()
 	else
 		print("Please select an achievement in the achievement window.")
 	end
+end
+
+function has_applied (val)
+    for index, value in ipairs(appliedgroups) do
+        if value == val then
+            return true
+        end
+    end
+
+    return false
 end

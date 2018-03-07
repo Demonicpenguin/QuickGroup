@@ -1,10 +1,7 @@
 ## Title: QuickGroup
-## Version: 2.0
+## Version: 2.3
 ## Author: Demonicpenguin
 ## Interface: 70300
-## SavedVariablesPerCharacter: lKeystone, bTank, bHeal, bDPS, iMode, achid
-## OptionalDeps: LibStub, LibUIDropDownMenu
+## SavedVariablesPerCharacter: lKeystone, bTank, bHeal, bDPS, iMode, achid, sNote, bAutoConfirm
 
 QuickGroup.xml
-LibStub\LibStub.lua
-LibUIDropDownMenu\LibUIDropDownMenu.xml
