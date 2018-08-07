@@ -20,58 +20,62 @@ SlashCmdList["QUICKGROUP"] = function(msg)
 		QuickGroupFrame:Show()
 	elseif command == "set" then
 		QuickGroupFrame:Show()
+	-- elseif command == "print" then
+		-- if bTank == true then print("Tank: True") else print("Tank: False") end
+		-- if bHeal == true then print("Heal: True") else print("Heal: False") end
+		-- if bDPS == true then print("DPS: True") else print("DPS: False") end
 	elseif command == "join" then
-		local result = GetMouseFocus().resultID
-		if result ~= nil then
-		a, b, c, d, e, f, g, h, i, j, k, l, w = C_LFGList.GetSearchResultInfo(result);
-		end
+		-- local result = GetMouseFocus().resultID
+		-- if result ~= nil then
+		-- a, b, c, d, e, f, g, h, i, j, k, l, w = C_LFGList.GetSearchResultInfo(result);
+		-- end
 		
-		if w ~= nil and result ~= nil then
+		-- if w ~= nil and result ~= nil then
 		
-		if bTank == false and bHeal == false and bDPS == false then
-			print("No roles configured");
-			QuickGroupFrame:Show()
-			return;
-		else
-			C_LFGList.ApplyToGroup(result, sNote, bTank, bHeal, bDPS);		
-		end
+		-- if bTank == false and bHeal == false and bDPS == false then
+			-- PopupMessage("No roles configured");
+			-- QuickGroupFrame:Show()
+			-- return;
+		-- else
+			-- C_LFGList.ApplyToGroup(result, sNote, bTank, bHeal, bDPS);		
+		-- end
 		
-		if iMode == 0 then
-			local keystones = GetKeystone()
-			for i = 1, #keystones do
-				lKeystone = keystones[i]
-			end
+		-- if iMode == 0 then
+			-- local keystones = GetKeystone()
+			-- for i = 1, #keystones do
+				-- lKeystone = keystones[i]
+			-- end
 	
-			if lKeystone == nil then
-				print("No key setup!");
-			else
-				SendChatMessage(lKeystone, "WHISPER", nil, w); 
-			end
-		elseif iMode == 1 then
-			SendChatMessage(GetAchievementLink(achid), "WHISPER", nil, w);
-		elseif iMode == nil then
-			print("You broke the addon")
-		end
+			-- if lKeystone == nil then
+				-- PopupMessage("No key setup!");
+			-- else
+				-- SendChatMessage(lKeystone, "WHISPER", nil, w); 
+			-- end
+		-- elseif iMode == 1 then
+			-- SendChatMessage(GetAchievementLink(achid), "WHISPER", nil, w);
+		-- elseif iMode == nil then
+			-- PopupMessage("You broke the addon")
+		-- end
 		
-	 else
-      if w == nil then
-        print("Error trying to find leader");
-      end
-      if result == nil then
-        print("No result found, were you moused over the LFG window?");
-      end
-    end
+	 -- else
+      -- if w == nil then
+        -- PopupMessage("Error trying to find leader");
+      -- end
+      -- if result == nil then
+        -- PopupMessage("No result found, were you moused over the LFG window?");
+      -- end
+    -- end
 	elseif command == "id" then
 		if GetMouseFocus().id ~= nil then
 			achid = GetMouseFocus().id;
 			achid = achid + 0;
 			if achid > 0 then
-				print("Achievement set to: "..GetAchievementLink(achid));
+				PopupMessage("Achievement set to: "..GetAchievementLink(achid));
 			else
-				print("No Achievement found, please mouse over an achievement and run the command again");
+				PopupMessage("No Achievement found, please mouse over an achievement and run the command again");
 			end
 		else
-			print("No Achievement found, please mouse over an achievement and run the command again");
+			PopupMessage("No Achievement found, please mouse over an achievement and run the command again");
 		end
 	end
 
@@ -96,15 +100,40 @@ function QuickGroupFrame_OnLoad()
 					button1 = "Yes",
 					button2 = "No",
 					OnAccept = function()
-						C_LFGList.ApplyToGroup(dialog, sNote, bTank, bHeal, bDPS);
+						
+						--C_LFGList.ApplyToGroup(dialog, sNote, bTank, bHeal, bDPS);
+						C_LFGList.ApplyToGroup(dialog, bTank, bHeal, bDPS);
 						SendWhisper(wtarget)
 					end,
 					timeout = 0,
 					whileDead = true,
 					hideOnEscape = false,
-					preferredIndex = 3,  -- avoid some UI taint, see http://www.wowace.com/announcements/how-to-avoid-some-ui-taint/
+					preferredIndex = 3,
 	}
-
+	
+	StaticPopupDialogs["QuickGroupError"] = {
+					text = "BLANK",
+					button1 = "Ok",
+					timeout = 0,
+					whileDead = true,
+					hideOnEscape = true,
+					preferredIndex = 3,
+					showAlert = true,
+	}
+	
+local origLFGList_OnClick = LFGListSearchPanel_SelectResult;
+LFGListSearchPanel_SelectResult = function(...)
+	local button = ...;
+	
+	origLFGList_OnClick(...); -- (6)
+	
+	if IsControlKeyDown() == true then
+		JoinGroup();
+	else
+	end
+	
+	
+end
 end
 
 function QuickGroupFrame_OnShow()
@@ -140,7 +169,7 @@ function QuickGroupFrame_OnShow()
 		chkNone:SetChecked(true)
 	end
 
-	boxNote:SetText(sNote)
+	-- boxNote:SetText(sNote)
 
 	AchieveCheck();
 end
@@ -206,23 +235,23 @@ function btnOk_OnClick()
 				lKeystone = keystones[i]
 		end
 		if lKeystone ~= nil then
-			print("Keystone Mode - Enabled: "..lKeystone)
+			PopupMessage("Keystone Mode - Enabled: "..lKeystone)
 		else
-			print("Keystone Mode - Enabled")
+			PopupMessage("Keystone Mode - Enabled")
 		end
 	end
 
 	if chkRaid:GetChecked() == true then
 		iMode = 1;
-		print("Raid Mode / Achievement - Enabled: "..GetAchievementLink(achid));
+		PopupMessage("Raid Mode / Achievement - Enabled: "..GetAchievementLink(achid));
 	end
 
 	if chkNone:GetChecked() == true then
 		iMode = 2;
-		print("No whisper will be sent to the leader")
+		PopupMessage("No whisper will be sent to the leader")
 	end
 
-	sNote = boxNote:GetText()
+	-- sNote = boxNote:GetText()
 
 	QuickGroupFrame:Hide();
 end
@@ -255,12 +284,12 @@ end
 
 function btnAoTC_OnClick()
 	achid = 12110
-	print("Achievement set to: "..GetAchievementLink(achid));
+	PopupMessage("Achievement set to: "..GetAchievementLink(achid));
 end
 
 function btnKeystone_OnClick()
 	achid = 11162
-	print("Achievement set to: "..GetAchievementLink(achid));
+	PopupMessage("Achievement set to: "..GetAchievementLink(achid));
 end
 
 function btnOther_OnClick()
@@ -314,49 +343,52 @@ function SendWhisper(w)
 		end
 
 		if lKeystone == nil then
-			print("No key setup!");
+			PopupMessage("No key setup!");
 		else
 			SendChatMessage(lKeystone, "WHISPER", nil, w);
 		end
 	elseif iMode == 1 then
 		SendChatMessage(GetAchievementLink(achid), "WHISPER", nil, w);
 	elseif iMode == nil then
-		print("You broke the addon")
+		PopupMessage("You broke the addon")
 	end
 end
 
 function JoinGroup(joinFrame, button)
-	if button == 'LeftButton' then
 
-		dialog = joinFrame:GetParent().selectedResult
+	if button == 'LeftButton' or IsControlKeyDown() == true then
+		dialog = LFGListFrame.SearchPanel.selectedResult
 		if dialog ~= nil then
 			a, b, groupname, d, e, f, g, h, i, j, k, l, w = C_LFGList.GetSearchResultInfo(dialog);
 		end
 
 		wtarget = w
+		
 
 		if w ~= nil and dialog ~= nil then
 			if bTank == false and bHeal == false and bDPS == false then
-				print("No roles configured");
+				PopupMessage("No roles configured");
 				QuickGroupFrame:Show()
 				return;
 			else
-				if has_applied(groupname) == true then					
+				if has_applied(w) == true then
 					StaticPopup_Show ("AppliedGroupFrame")
 				else
-					C_LFGList.ApplyToGroup(dialog, sNote, bTank, bHeal, bDPS);
-					table.insert(appliedgroups, groupname)
+					
+					--C_LFGList.ApplyToGroup(dialog, sNote, bTank, bHeal, bDPS);
+					C_LFGList.ApplyToGroup(dialog, bTank, bHeal, bDPS);
+					table.insert(appliedgroups, w)
 					SendWhisper(w)
 				end				
 			end
 		
 		else
 			if w == nil then
-			print("Error trying to find leader");
+			PopupMessage("Error trying to find leader");
 			end
 
 			if dialog == nil then
-			print("No result found, did you click on a group?");
+			PopupMessage("No result found, did you click on a group?");
 			end
 		end
 	end
@@ -370,9 +402,9 @@ end
 function GetID()
 	achid = AchievementFrameAchievements.selection
 	if achid ~= nil then
-		print("Achievement set to: "..GetAchievementLink(achid));
+		PopupMessage("Achievement set to: "..GetAchievementLink(achid));
 	else
-		print("Please select an achievement in the achievement window.")
+		PopupMessage("Please select an achievement in the achievement window.")
 	end
 end
 
@@ -384,4 +416,9 @@ function has_applied (val)
     end
 
     return false
+end
+
+function PopupMessage(msg)
+	StaticPopupDialogs["QuickGroupError"].text = msg;
+	StaticPopup_Show("QuickGroupError");
 end

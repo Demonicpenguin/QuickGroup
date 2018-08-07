@@ -68,12 +68,12 @@
 						<Anchor point="TOPLEFT" x="345" y="-15" />
 					</Anchors>
 				</FontString>
-				<FontString name="strNote" inherits="GameFontNormal" text="Note:" justifyH="RIGHT">
-					<Size x="80" y="20" />
-					<Anchors>
-						<Anchor point="TOPLEFT" x="221" y="-151" />
-					</Anchors>
-				</FontString>
+				<!-- <FontString name="strNote" inherits="GameFontNormal" text="Note:" justifyH="RIGHT"> -->
+					<!-- <Size x="80" y="20" /> -->
+					<!-- <Anchors> -->
+						<!-- <Anchor point="TOPLEFT" x="221" y="-151" /> -->
+					<!-- </Anchors> -->
+				<!-- </FontString> -->
 				<FontString name="strAutoConfirm" inherits="GameFontNormal" text="Auto Confirm Roles" justifyH="LEFT">
 					<Size x="148" y="20" />
 					<Anchors>
@@ -178,12 +178,12 @@
 					</OnClick>
 				</Scripts>
 			</Button>
-			<EditBox name="boxNote" inherits="InputBoxTemplate" autoFocus="false">
-				<Size x="128" y="32" />
-				<Anchors>
-					<Anchor point="TOPLEFT" x="307" y="-145" />
-				</Anchors>
-			</EditBox>
+			<!-- <EditBox name="boxNote" inherits="InputBoxTemplate" autoFocus="false" enabled="false" text="Temporarily Broken"> -->
+				<!-- <Size x="128" y="32" /> -->
+				<!-- <Anchors> -->
+					<!-- <Anchor point="TOPLEFT" x="307" y="-145" /> -->
+				<!-- </Anchors> -->
+			<!-- </EditBox> -->
 			<CheckButton name="chkAutoConfirm" inherits="UICheckButtonTemplate" text="CheckButton1">
 				<Size x="16" y="16" />
 				<Anchors>
