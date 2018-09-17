@@ -2,7 +2,7 @@
 
 	SLASH_QUICKGROUP1, SLASH_QUICKGROUP2 = "/qg", "/QG";
 	lKeystone = nil;
-	local KeystoneId = 138019
+	local KeystoneId = 158923
 	dialog = nil;
 	bTank = false;
 	bHeal = false;
