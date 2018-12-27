@@ -12,7 +12,7 @@
 	local appliedgroups = {}
 	wtarget = "";
 	iMode = 0;
-	achid = 12110;
+	achid = 13322;
 
 SlashCmdList["QUICKGROUP"] = function(msg)
 	local command = strsplit(" ",msg)
@@ -359,31 +359,32 @@ function JoinGroup(joinFrame, button)
 	if button == 'LeftButton' or IsControlKeyDown() == true then
 		dialog = LFGListFrame.SearchPanel.selectedResult
 		if dialog ~= nil then
-			a, b, groupname, d, e, f, g, h, i, j, k, l, w = C_LFGList.GetSearchResultInfo(dialog);
+			--a, b, groupname, d, e, f, g, h, i, j, k, l, w = C_LFGList.GetSearchResultInfo(dialog);
+			--autoAccept, age, comment, numGuildMates, leaderName, questID, activityID, numBNetFriends, numMembers, requiredItemLevel, searchResultID, voiceChat, requiredHonorLevel, isDelisted, numCharFriends = C_LFGList.GetSearchResultInfo(dialog);
+			group = C_LFGList.GetSearchResultInfo(dialog);
 		end
 
-		wtarget = w
-		
+		wtarget = group.leaderName
 
-		if w ~= nil and dialog ~= nil then
+		if wtarget ~= nil and dialog ~= nil then
 			if bTank == false and bHeal == false and bDPS == false then
 				PopupMessage("No roles configured");
 				QuickGroupFrame:Show()
 				return;
 			else
-				if has_applied(w) == true then
+				if has_applied(wtarget) == true then
 					StaticPopup_Show ("AppliedGroupFrame")
 				else
 					
 					--C_LFGList.ApplyToGroup(dialog, sNote, bTank, bHeal, bDPS);
 					C_LFGList.ApplyToGroup(dialog, bTank, bHeal, bDPS);
-					table.insert(appliedgroups, w)
-					SendWhisper(w)
+					table.insert(appliedgroups, wtarget)
+					SendWhisper(wtarget)
 				end				
 			end
 		
 		else
-			if w == nil then
+			if wtarget == nil then
 			PopupMessage("Error trying to find leader");
 			end
 
