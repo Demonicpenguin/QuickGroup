@@ -2,7 +2,7 @@
 
 	SLASH_QUICKGROUP1, SLASH_QUICKGROUP2 = "/qg", "/QG";
 	lKeystone = nil;
-	local KeystoneId = 158923
+	local KeystoneId = 180653
 	dialog = nil;
 	bTank = false;
 	bHeal = false;
@@ -12,7 +12,8 @@
 	local appliedgroups = {}
 	wtarget = "";
 	iMode = 0;
-	achid = 13322;
+	achid = 15470;
+	aotc = 15470;
 
 SlashCmdList["QUICKGROUP"] = function(msg)
 	local command = strsplit(" ",msg)
@@ -283,7 +284,7 @@ function chkAutoConfirm_OnClick()
 end
 
 function btnAoTC_OnClick()
-	achid = 12110
+	achid = aotc
 	PopupMessage("Achievement set to: "..GetAchievementLink(achid));
 end
 

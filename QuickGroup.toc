@@ -1,7 +1,7 @@
 ## Title: QuickGroup
 ## Version: 2.4
 ## Author: Demonicpenguin
-## Interface: 80100
+## Interface: 90200
 ## SavedVariablesPerCharacter: lKeystone, bTank, bHeal, bDPS, iMode, achid, sNote, bAutoConfirm
 
 QuickGroup.xml
