@@ -1,39 +1,31 @@
-<Ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.blizzard.com/wow/ui/">
+<Ui xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd" xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file="QuickGroup.lua" />
-	<Frame name="QuickGroupFrame" parent="UIParent" toplevel="true" enableMouse="true">
+	<Frame name="QuickGroupFrame" inherits="BackdropTemplate" parent="UIParent" toplevel="true" movable="true" enableMouse="true">
 		<Size x="461" y="258" />
 		<Anchors>
-			<Anchor point="CENTER" x="0" y="-4" />
+			<Anchor y="-4" point="CENTER" />
 		</Anchors>
-		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
-			<BackgroundInsets>
-				<AbsInset left="11" right="12" top="12" bottom="11" />
-			</BackgroundInsets>
-			<TileSize>
-				<AbsValue val="32" />
-			</TileSize>
-			<EdgeSize>
-				<AbsValue val="32" />
-			</EdgeSize>
-		</Backdrop>
+		<KeyValues>
+			<KeyValue key="backdropInfo" value="BACKDROP_DIALOG_32_32" keyType="string" type="global" />
+		</KeyValues>
 		<Layers>
 			<Layer>
 				<Texture name="HealsTexture" file="Interface\LFGFRAME\UI-LFG-ICON-ROLES">
 					<Size x="64" y="64" />
 					<Anchors>
-						<Anchor point="TOPLEFT" x="139" y="-49" />
+						<Anchor x="139" y="-49" point="TOPLEFT" />
 					</Anchors>
 				</Texture>
 				<Texture name="DPSTexture" file="Interface\LFGFRAME\UI-LFG-ICON-ROLES">
 					<Size x="64" y="64" />
 					<Anchors>
-						<Anchor point="TOPLEFT" x="253" y="-49" />
+						<Anchor x="253" y="-49" point="TOPLEFT" />
 					</Anchors>
 				</Texture>
 				<Texture name="TankTexture" file="Interface\LFGFRAME\UI-LFG-ICON-ROLES">
 					<Size x="64" y="64" />
 					<Anchors>
-						<Anchor point="TOPLEFT" x="25" y="-49" />
+						<Anchor x="25" y="-49" point="TOPLEFT" />
 					</Anchors>
 				</Texture>
 			</Layer>
@@ -41,171 +33,164 @@
 				<FontString name="strQuickGroup" inherits="GameFontNormal" text="Quick Group Role Selector">
 					<Size x="187" y="20" />
 					<Anchors>
-						<Anchor point="TOPLEFT" x="77" y="-15" />
+						<Anchor x="77" y="-15" point="TOPLEFT" />
 					</Anchors>
 				</FontString>
 				<FontString name="strMKeystone" inherits="GameFontNormal" text="Mode: Keystone / Mythic+" justifyH="LEFT">
 					<Size x="178" y="20" />
 					<Anchors>
-						<Anchor point="TOPLEFT" x="47" y="-151" />
+						<Anchor x="47" y="-151" point="TOPLEFT" />
 					</Anchors>
 				</FontString>
 				<FontString name="strMRaid" inherits="GameFontNormal" text="Mode: Raid / Achievement" justifyH="LEFT">
 					<Size x="178" y="20" />
 					<Anchors>
-						<Anchor point="TOPLEFT" x="47" y="-179" />
+						<Anchor x="47" y="-179" point="TOPLEFT" />
 					</Anchors>
 				</FontString>
 				<FontString name="strMNone" inherits="GameFontNormal" text="Mode: No Whisper" justifyH="LEFT">
 					<Size x="127" y="20" />
 					<Anchors>
-						<Anchor point="TOPLEFT" x="47" y="-205" />
+						<Anchor x="47" y="-205" point="TOPLEFT" />
 					</Anchors>
 				</FontString>
 				<FontString name="strAchievements" inherits="GameFontNormal" text="Achievements:" justifyH="RIGHT">
 					<Size x="94" y="20" />
 					<Anchors>
-						<Anchor point="TOPLEFT" x="345" y="-15" />
+						<Anchor x="345" y="-15" point="TOPLEFT" />
 					</Anchors>
 				</FontString>
-				<!-- <FontString name="strNote" inherits="GameFontNormal" text="Note:" justifyH="RIGHT"> -->
-					<!-- <Size x="80" y="20" /> -->
-					<!-- <Anchors> -->
-						<!-- <Anchor point="TOPLEFT" x="221" y="-151" /> -->
-					<!-- </Anchors> -->
-				<!-- </FontString> -->
 				<FontString name="strAutoConfirm" inherits="GameFontNormal" text="Auto Confirm Roles" justifyH="LEFT">
 					<Size x="148" y="20" />
 					<Anchors>
-						<Anchor point="TOPLEFT" x="291" y="-173" />
+						<Anchor x="291" y="-173" point="TOPLEFT" />
 					</Anchors>
 				</FontString>
 			</Layer>
 		</Layers>
 		<Frames>
 			<CheckButton name="TankCheckBox" inherits="UICheckButtonTemplate" text="CheckButton1">
-				<Size x="32" y="32" />
 				<Anchors>
-					<Anchor point="TOPLEFT" x="41" y="-110" />
+					<Anchor x="41" y="-110" point="TOPLEFT" />
 				</Anchors>
 			</CheckButton>
 			<CheckButton name="HealsCheckBox" inherits="UICheckButtonTemplate" text="CheckButton1">
-				<Size x="32" y="32" />
 				<Anchors>
-					<Anchor point="TOPLEFT" x="155" y="-110" />
+					<Anchor x="155" y="-110" point="TOPLEFT" />
 				</Anchors>
 			</CheckButton>
 			<CheckButton name="DPSCheckBox" inherits="UICheckButtonTemplate" text="CheckButton1">
-				<Size x="32" y="32" />
 				<Anchors>
-					<Anchor point="TOPLEFT" x="269" y="-110" />
+					<Anchor x="269" y="-110" point="TOPLEFT" />
 				</Anchors>
 			</CheckButton>
 			<Button name="btnOk" inherits="UIPanelButtonTemplate" text="Ok">
 				<Size x="75" y="23" />
 				<Anchors>
-					<Anchor point="TOPLEFT" x="364" y="-211" />
+					<Anchor x="364" y="-211" point="TOPLEFT" />
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						btnOk_OnClick()
+						            btnOk_OnClick()
 					</OnClick>
 				</Scripts>
 			</Button>
 			<CheckButton name="chkKeystone" inherits="UICheckButtonTemplate" text="CheckButton1">
 				<Size x="16" y="16" />
 				<Anchors>
-					<Anchor point="TOPLEFT" x="25" y="-155" />
+					<Anchor x="25" y="-155" point="TOPLEFT" />
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						chkKeystone_OnClick()
+						            chkKeystone_OnClick()
 					</OnClick>
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="chkRaid" inherits="UICheckButtonTemplate" text="CheckButton1">
 				<Size x="16" y="16" />
 				<Anchors>
-					<Anchor point="TOPLEFT" x="25" y="-183" />
+					<Anchor x="25" y="-183" point="TOPLEFT" />
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						chkRaid_OnClick()
+						            chkRaid_OnClick()
 					</OnClick>
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="chkNone" inherits="UICheckButtonTemplate" text="CheckButton1">
 				<Size x="16" y="16" />
 				<Anchors>
-					<Anchor point="TOPLEFT" x="25" y="-211" />
+					<Anchor x="25" y="-211" point="TOPLEFT" />
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						chkNone_OnClick()
+						            chkNone_OnClick()
 					</OnClick>
 				</Scripts>
 			</CheckButton>
 			<Button name="btnAoTC" inherits="UIPanelButtonTemplate" text="AoTC">
 				<Size x="85" y="23" />
 				<Anchors>
-					<Anchor point="TOPLEFT" x="350" y="-41" />
+					<Anchor x="350" y="-41" point="TOPLEFT" />
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						btnAoTC_OnClick()
+						            btnAoTC_OnClick()
 					</OnClick>
 				</Scripts>
 			</Button>
 			<Button name="btnKeystone" inherits="UIPanelButtonTemplate" text="Key Master">
 				<Size x="85" y="23" />
 				<Anchors>
-					<Anchor point="TOPLEFT" x="350" y="-70" />
+					<Anchor x="350" y="-70" point="TOPLEFT" />
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						btnKeystone_OnClick()
+						            btnKeystone_OnClick()
 					</OnClick>
 				</Scripts>
 			</Button>
 			<Button name="btnOther" inherits="UIPanelButtonTemplate" text="Other">
 				<Size x="85" y="23" />
 				<Anchors>
-					<Anchor point="TOPLEFT" x="350" y="-99" />
+					<Anchor x="350" y="-99" point="TOPLEFT" />
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						btnOther_OnClick()
+						            btnOther_OnClick()
 					</OnClick>
 				</Scripts>
 			</Button>
-			<!-- <EditBox name="boxNote" inherits="InputBoxTemplate" autoFocus="false" enabled="false" text="Temporarily Broken"> -->
-				<!-- <Size x="128" y="32" /> -->
-				<!-- <Anchors> -->
-					<!-- <Anchor point="TOPLEFT" x="307" y="-145" /> -->
-				<!-- </Anchors> -->
-			<!-- </EditBox> -->
 			<CheckButton name="chkAutoConfirm" inherits="UICheckButtonTemplate" text="CheckButton1">
 				<Size x="16" y="16" />
 				<Anchors>
-					<Anchor point="TOPLEFT" x="269" y="-177" />
+					<Anchor x="269" y="-177" point="TOPLEFT" />
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						chkAutoConfirm_OnClick()
+						            chkAutoConfirm_OnClick()
 					</OnClick>
 				</Scripts>
 			</CheckButton>
 		</Frames>
 		<Scripts>
-			<OnLoad>
-				QuickGroupFrame_OnLoad()
+			<OnLoad inherit="prepend">
+				        QuickGroupFrame_OnLoad()
+
+				self:RegisterForDrag("LeftButton")
 			</OnLoad>
 			<OnShow>
-				QuickGroupFrame_OnShow()
+				        QuickGroupFrame_OnShow()
 			</OnShow>
 			<OnEvent>
-				QuickGroupFrame_OnEvent()
+				        QuickGroupFrame_OnEvent()
 			</OnEvent>
+			<OnDragStart>
+				self:StartMoving()
+			</OnDragStart>
+			<OnDragStop>
+				self:StopMovingOrSizing()
+			</OnDragStop>
 		</Scripts>
 	</Frame>
 </Ui>
